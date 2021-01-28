@@ -16,14 +16,23 @@ const Ul = styled.ul`
   }
 `;
 
-const Scrollable = ({ track, playlist }) => {
+const Scrollable = ({ playlist, setPlaylist }) => {
 
   const [ trackPlaying, setTrackPlaying ] = useState(null);
 
+  const removeTrack = (track_id) => {
+    const playlistIds = playlist.map(track => track.id);
+    const indexFound = playlistIds.findIndex(id => track_id === id);
+    const newPlaylist = [ ...playlist ];
+    newPlaylist.splice(indexFound, 1);
+    setPlaylist(newPlaylist);
+  };
+
+  console.log('New Playlist:', playlist);
+
   return (
     <Ul>
-      <Track trackPlaying={trackPlaying} setTrackPlaying={setTrackPlaying} track={track} />
-      {playlist.map(track => <Track key={track.id} trackPlaying={trackPlaying} setTrackPlaying={setTrackPlaying} track={track} />)}
+      {playlist.map(track => <Track key={track.id} trackPlaying={trackPlaying} setTrackPlaying={setTrackPlaying} track={track} removeTrack={removeTrack} />)}
     </Ul>
   );
 };

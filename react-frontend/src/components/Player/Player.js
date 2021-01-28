@@ -12,7 +12,7 @@ const Player = ({ track, playlist, setPlaylist }) => {
         <div className="cover-gradient"></div>
         <span className="track-name">{track.name}, {track.artists[0].name}</span>
       </Cover>
-      <Scrollable track={track} playlist={playlist} />
+      <Scrollable playlist={playlist} setPlaylist={setPlaylist} />
     </Container>
   );
 };

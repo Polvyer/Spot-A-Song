@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Li } from './Styles';
+import { Li, Icons } from './Styles';
 import { CircleAudioPlayer } from '../../CircleAudioPlayer';
+import Trash from '../../images/trash.svg';
 
-const Track = ({ track, trackPlaying, setTrackPlaying }) => {
+const Track = ({ track, trackPlaying, setTrackPlaying, removeTrack }) => {
 
   // Instantiate new player
   const [ player, setPlayer ] = useState(track.preview_url ? new CircleAudioPlayer({
@@ -55,8 +56,13 @@ const Track = ({ track, trackPlaying, setTrackPlaying }) => {
   };
 
   return (
-    <Li ref={liRef} onDrop={e => handleDrop(e)} onDragOver={e => handleDragOver(e)} onDragEnter={e => handleDragEnter(e)} onDragLeave={e => handleDragLeave(e)}>
+    <Li onDrop={e => handleDrop(e)} onDragOver={e => handleDragOver(e)} onDragEnter={e => handleDragEnter(e)} onDragLeave={e => handleDragLeave(e)}>
       {track.name}, {track.artists[0].name}
+      <Icons>
+        <div ref={liRef}>
+        </div>
+        <img onClick={removeTrack.bind(null, track.id)} className='trash' src={Trash} alt="Trash" />
+      </Icons>
     </Li>
   );
 };

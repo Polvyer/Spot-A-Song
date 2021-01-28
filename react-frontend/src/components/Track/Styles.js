@@ -12,6 +12,13 @@ const Li = styled.li`
     visibility: hidden
   }
 
+  .trash {
+    visibility: hidden;
+    width: 2em;
+    margin-left: 5px;
+    transform: translateY(-1px);
+  }
+
   :hover {
     background-color: #73c9b9;
     color: white;
@@ -20,9 +27,20 @@ const Li = styled.li`
       visibility: visible;
       cursor: pointer;
     }
+
+    .trash {
+      visibility: visible;
+      cursor: pointer;
+    }
   }
 `
 
+const Icons = styled.div`
+  display: flex;
+  align-items: flex-start;
+`;
+
 export {
   Li,
+  Icons,
 }
