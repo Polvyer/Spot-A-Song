@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Li } from './Styles';
 import { CircleAudioPlayer } from '../../CircleAudioPlayer';
 
-const Track = ({ track, index, trackPlaying, setTrackPlaying }) => {
+const Track = ({ track, trackPlaying, setTrackPlaying }) => {
 
   // Instantiate new player
   const [ player, setPlayer ] = useState(track.preview_url ? new CircleAudioPlayer({
@@ -23,28 +23,32 @@ const Track = ({ track, index, trackPlaying, setTrackPlaying }) => {
     if (player) {
       player.appendTo(liRef.current);
     }
-
   }, [player]);
 
-  // Pause player when another track is playing
+  // Pause player when another track is playing (+ pause when playlist is closed)
   useEffect(() => {
-    if (trackPlaying && player && (trackPlaying !== track.id)) {
-      player.pause();
-    }
-  }, [trackPlaying, player, track]);
+    return (() => {
+      if (player && (trackPlaying === track.id)) {
+        player.pause();
+      }
+    });
+  }, [player, track.id, trackPlaying, track]);
 
   const handleDragEnter = e => {
     e.preventDefault();
     e.stopPropagation();
   };
+
   const handleDragLeave = e => {
     e.preventDefault();
     e.stopPropagation();
   };
+
   const handleDragOver = e => {
     e.preventDefault();
     e.stopPropagation();
   };
+  
   const handleDrop = e => {
     e.preventDefault();
     e.stopPropagation();

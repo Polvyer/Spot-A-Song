@@ -4,7 +4,10 @@ const Container = styled.div`
   flex: 1;
   flex-basis: 330px;
   padding: 20px;
-  /* background-color: #f6f6f9; */
+
+  @media screen and (max-width: 1029px) {
+    background-color: #f6f6f9;
+  }
 
   .info-title {
     color: #88899f;
@@ -83,7 +86,7 @@ const Container = styled.div`
 const Radios = styled.div`
   display: flex;
   justify-content: flex-start;
-`
+`;
 
 export {
   Container,
