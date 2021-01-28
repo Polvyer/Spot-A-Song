@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { SEC_TO_MS, ONE_MINUTE } from '../constants/constants';
+import { SEC_TO_MS, TWO_MINUTE_IN_MS } from '../constants/constants';
 import SpotifyAPI from '../api/SpotifyAPI';
 
 export const useToken = () => {
@@ -25,7 +25,7 @@ export const useToken = () => {
     let timeout;
     const tokenInfo = JSON.parse(localStorage.getItem('tokenInfo'));
     const currentDate = Date.now();
-    const tokenIsValid = tokenInfo && ((currentDate - tokenInfo.date_created) < (tokenInfo.expires_in * SEC_TO_MS - ONE_MINUTE));
+    const tokenIsValid = tokenInfo && ((currentDate - tokenInfo.date_created) < (tokenInfo.expires_in * SEC_TO_MS - TWO_MINUTE_IN_MS));
 
     if (tokenIsValid) { // Valid token
       const time = (tokenInfo.expires_in * SEC_TO_MS) - (currentDate - tokenInfo.date_created);

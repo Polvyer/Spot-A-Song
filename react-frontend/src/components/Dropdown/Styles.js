@@ -1,5 +1,16 @@
 import styled from 'styled-components';
 
+const Container = styled.div`
+  position: relative;
+  width: 37.5em;
+  left: 50%;
+  transform: translate(-50%, -10%);
+
+  @media screen and (max-width: 800px) {
+    width: 88%;
+  }
+`
+
 const Search = styled.input`
   padding: 18px;
   width: 25em;
@@ -23,6 +34,7 @@ const Content = styled.div`
   width: 100%;
   text-align: left;
   margin-top: 5px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 
   .dropdown-item {
     color: black;
@@ -48,6 +60,7 @@ const Content = styled.div`
 `
 
 export {
+  Container,
   Search,
   Content,
 }

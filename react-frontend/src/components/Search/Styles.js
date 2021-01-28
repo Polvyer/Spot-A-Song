@@ -16,7 +16,7 @@ const LogoBox = styled.div`
   .logo {
     height: 130px;
   }
-`
+`;
 
 const TextBox = styled.div`
   position: absolute;
@@ -29,18 +29,7 @@ const TextBox = styled.div`
   @media screen and (max-width: 800px) {
     top: 55%;
   }
-
-  .dropdown {
-    position: relative;
-    width: 37.5em;
-    left: 50%;
-    transform: translate(-50%, -10%);
-
-    @media screen and (max-width: 800px) {
-      width: 88%;
-    }
-  }
-`
+`;
 
 const HeadingPrimary = styled.h1`
   backface-visibility: hidden;
@@ -62,7 +51,7 @@ const HeadingPrimary = styled.h1`
     font-weight: 600;
     letter-spacing: .5px;
   }
-`
+`;
 
 export {
   Header,
