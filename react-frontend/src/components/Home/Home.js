@@ -9,8 +9,6 @@ const Home = () => {
   const [ playlist, setPlaylist ] = useState([]);
   const [ track, setTrack ] = useState('');
 
-  console.log('Playlist: ', playlist);
-
   return (
     <>
       { playlist.length > 0 ? <Playlist track={track} playlist={playlist} setPlaylist={setPlaylist} /> : <Search track={track} setTrack={setTrack} token={token} setPlaylist={setPlaylist} />}

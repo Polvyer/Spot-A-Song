@@ -4,6 +4,7 @@ import Spotify from '../../images/spotify.png';
 import Radio from '../Radio/Radio';
 
 const Information = () => {
+  
   return (
     <Container>
       <h3 className="info-title">Playlist Information</h3>

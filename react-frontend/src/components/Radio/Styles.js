@@ -22,6 +22,8 @@ const RadioInput = styled.label`
     height: 0;
     :checked + .radio__control {
       background: radial-gradient(#73c9b9 50%, white 51%);
+      background: #73c9b9;
+      border: 2px solid #73c9b9;
     }
   }
 `;
@@ -31,7 +33,7 @@ const RadioControl = styled.span`
   width: 1.4em;
   height: 1.4em;
   border-radius: 50%;
-  border: 2px solid #73c9b9;
+  border: 2px solid #88899f;
   background-color: white;
   transform: translateY(0.05em);
 `;
