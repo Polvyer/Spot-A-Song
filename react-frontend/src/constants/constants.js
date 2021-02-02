@@ -1,6 +1,11 @@
 /* Miscellaneous */
 const SEC_TO_MS = 1000;
 const TWO_MINUTE_DELAY_IN_MS = 120000;
+const MESSAGE_TYPE = 'SPOTIFY';
+
+/* Popup Window */
+const POPUP_WIDTH = 400;
+const POPUP_HEIGHT = 426;
 
 /* Flask Miscellaneous */
 const FLASK_BASE_URL = 'http://localhost:5000';
@@ -22,6 +27,9 @@ const SPOTIFY_GET_TRACK_AUDIO_FEATURES = "https://api.spotify.com/v1/audio-featu
 export {
   SEC_TO_MS,
   TWO_MINUTE_DELAY_IN_MS,
+  MESSAGE_TYPE,
+  POPUP_WIDTH,
+  POPUP_HEIGHT,
   FLASK_TOKEN_ENDPOINT,
   SPOTIFY_CLIENT_ID,
   SPOTIFY_REDIRECT_URI,

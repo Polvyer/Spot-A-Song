@@ -55,6 +55,36 @@ const Login = styled.button`
   }
 `;
 
+const Nav = styled.nav`
+  position: absolute;
+  right: 25px;
+  top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+
+  .nav-items {
+    color: white;
+    padding: 15px 5px;
+    cursor: pointer;
+    font-weight: 400;
+    font-size: 1.1rem;
+    line-height: 1.42857143;
+    margin-right: 15px;
+
+    :hover {
+      color: #73c9b9;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    top: 26%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+`;
+
 const TextBox = styled.div`
   position: absolute;
   top: 50%;
@@ -97,6 +127,7 @@ const HeadingPrimary = styled.h1`
 export {
   Header,
   Login,
+  Nav,
   LogoBox,
   TextBox,
   HeadingPrimary,

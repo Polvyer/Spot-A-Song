@@ -9,4 +9,4 @@ export const regularErrorHandler = (err, setTracks, setErrors, errors) => {
   } else { // Unknown error
     setErrors(errors.concat('Unknown error'));
   }
-}
+};
