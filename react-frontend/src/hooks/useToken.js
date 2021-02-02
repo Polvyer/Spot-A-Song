@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { SEC_TO_MS, TWO_MINUTE_IN_MS } from '../constants/constants';
 import SpotifyAPI from '../api/SpotifyAPI';
+import FlaskAPI from '../api/FlaskAPI';
 
 export const useToken = () => {
 
@@ -9,7 +10,6 @@ export const useToken = () => {
   useEffect(() => {
 
     const getAccessToken = async () => {
-
       try {
         const response = await SpotifyAPI.requestAuthorization();
         timeout = setTimeout(getAccessToken, response.data.expires_in * SEC_TO_MS); // Request access token every hour

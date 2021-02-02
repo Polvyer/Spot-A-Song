@@ -1,87 +1,97 @@
-import React, { useState } from 'react';
-import { Header, LogoBox, TextBox, HeadingPrimary } from './Styles';
+import React, { useState, useContext } from 'react';
+import { Header, Login, LogoBox, TextBox, HeadingPrimary } from './Styles';
 import Dropdown from '../Dropdown/Dropdown';
 import Logo from '../../images/logo.png';
 import SpotifyAPI from '../../api/SpotifyAPI';
+import Spotify from '../../images/spotify.png';
+import { ErrorContext } from '../../context/ErrorContext';
+import { regularErrorHandler } from '../../helpers/regularErrorHandler';
 
 const Search = ({ token, setPlaylist, setTrack }) => {
 
   const [ tracks, setTracks ] = useState([]);
   const [ keywords, setKeyWords ] = useState('');
+  const { errors, setErrors } = useContext(ErrorContext);
 
+  // Redirects user to Spotify authorization page
+  const connectWithSpotify = () => {
+    const url = SpotifyAPI.getAuthorizationURL();
+    window.location.assign(url);
+  };
+
+  // Reacts to user's input
   const handleSearchInputChange = async (e) => {
 
-    /* Change search input */
+    // Change search input
     const searchInput = e.target.value;
     setKeyWords(searchInput);
 
-    /* Search for a list of tracks */
-    try {
-      const response = await SpotifyAPI.searchTrack(token, searchInput);
-      setTracks(response.data.tracks.items);
-    } catch (err) {
-      if (err.response.data) {
-        console.log(err.response);
-        if (err.response.status === 400) { // Bad request
-          setTracks([]);
-        }
-        if (err.response.status === 401) { // Invalid token
-          // TO-DO
-        }
-      } else { // Unknown error
-        console.log(err);
+    // Search for a list of tracks
+    if (searchInput) {
+      try {
+        const response = await SpotifyAPI.searchTrack(token, searchInput);
+        setTracks(response.data.tracks.items);
+      } catch (err) {
+        regularErrorHandler(err, setTracks, setErrors, errors);
       }
     }
-  }
+  };
 
-  const onTrackSelect = async (track, e) => {
+  // User selects a track from the list of tracks
+  const onTrackSelect = async (track) => {
 
-    /* Save selected track */
+    // Save selected track
     setTrack(track);
     const track_id = track.id; // Extract track id
 
-    /* Get genres of track */
+    // Get genres associated w/ track
     let response;
-    const artist_id = track.artists[0].id;
+    const artist_id = track.artists[0].id; // Extract artist id
     try {
       response = await SpotifyAPI.getArtist(token, artist_id);
     } catch (err) {
-      if (err.response) {
-        console.log(err.response);
-        // TO-DO
-      }
+      regularErrorHandler(err, setTracks, setErrors, errors);
+      return;
     }
 
-    /* Analyze genres */
-    const genres = response.data.genres;
+    // Analyze genres
+    const genres = response.data.genres; // Extract genres
     if (genres.length <= 0) { // No genres found
       // TO-DO
-    } else {
-      if (genres.length <= 5) { // Less than 5 genres found
-        /* Get recommendations */
+    } 
+
+    else { // Genres found
+      if (genres.length <= 3) { // Less than 3 genres found
+        // Get recommendations
         try {
           response = await SpotifyAPI.getRecommendations(token, track_id, artist_id, genres);
-          setPlaylist(response.data.tracks);
+          setPlaylist([track].concat(response.data.tracks));
         } catch (err) {
-
+          regularErrorHandler(err, setTracks, setErrors, errors);
+          return;
         }
-      } else { // More than 5 genres found
-        // TO-DO
+      } 
+      
+      else { // More than 3 genres found
+        // Get recommendations
+        const newGenres = genres.slice(0, 3); // Extract only 3 genres
+        try {
+          response = await SpotifyAPI.getRecommendations(token, track_id, artist_id, newGenres);
+          setPlaylist([track].concat(response.data.tracks));
+        } catch (err) {
+          regularErrorHandler(err, setTracks, setErrors, errors);
+          return;
+        }
       }
     }
-
-    /*
-    console.log('Artist ID:', artist_id);
-    console.log('Track ID: ', track_id);
-    console.log('Genres: ', genres);
-    */
-  }
+  };
 
   return (
     <Header>
       <LogoBox>
         <img src={Logo} alt="logo" className="logo" />
       </LogoBox>
+      <Login onClick={connectWithSpotify}><img className="spotify-logo" alt="Spotify" src={Spotify} /><span>Connect with Spotify</span></Login>
       <TextBox className="text-box">
         <HeadingPrimary className="heading-primary">
           <span className="heading-primary-main">Live with music</span>

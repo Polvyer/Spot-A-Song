@@ -15,7 +15,7 @@ const Track = ({ track, trackPlaying, setTrackPlaying, removeTrack, handleDragSt
     loaded: 0
   });
 
-  // Pause player when another track is playing (+ pause when playlist is closed)
+  // Pause player when another track is playing (or when component is unmounted)
   useEffect(() => {
     return (() => {
       if (player && (trackPlaying === track.id)) {
@@ -56,7 +56,7 @@ const Track = ({ track, trackPlaying, setTrackPlaying, removeTrack, handleDragSt
             ref={player}
             url={track.preview_url}
             playing={playing}
-            volume={0.3}
+            volume={0.1}
             height="0"
             width="0"
             onProgress={setPlayerState}

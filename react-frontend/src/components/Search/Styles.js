@@ -16,6 +16,43 @@ const LogoBox = styled.div`
   .logo {
     height: 130px;
   }
+
+  @media screen and (max-width: 500px) {
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+`;
+
+const Login = styled.button`
+  position: absolute;
+  right: 25px;
+  top: 40px;
+  padding: 15px;
+  background-color: transparent;
+  color: white;
+  border: 1px solid #fff;
+  font-weight: 400;
+  cursor: pointer;
+  display: block;
+  border-radius: 4px;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  letter-spacing: .5px;
+
+  .spotify-logo {
+    width: 1.4em;
+    margin-right: 5px;
+  }
+
+  @media screen and (max-width: 500px) {
+    top: 26%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 `;
 
 const TextBox = styled.div`
@@ -28,6 +65,10 @@ const TextBox = styled.div`
 
   @media screen and (max-width: 800px) {
     top: 55%;
+  }
+
+  @media screen and (max-width: 500px) {
+    top: 65%;
   }
 `;
 
@@ -55,7 +96,8 @@ const HeadingPrimary = styled.h1`
 
 export {
   Header,
+  Login,
   LogoBox,
   TextBox,
   HeadingPrimary,
-}
+};
