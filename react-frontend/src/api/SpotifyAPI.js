@@ -1,21 +1,6 @@
 /* eslint-disable import/no-anonymous-default-export */
 import axios from 'axios';
-import { SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI, SPOTIFY_AUTHORIZE_ENDPOINT, SPOTIFY_TOKEN_ENDPOINT, SPOTIFY_SEARCH_ENDPOINT, SPOTIFY_GET_ARTIST_ENDPOINT, SPOTIFY_GET_RECOMMENDATIONS_ENDPOINT, SPOTIFY_GET_TRACK_AUDIO_FEATURES } from '../constants/constants';
-
-/* The request is sent to the /api/token endpoint of the Accounts service */
-const requestAuthorization = () => {
-
-  const config = {
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': `Basic ${btoa(`${process.env.REACT_APP_CLIENT_ID}:${process.env.REACT_APP_CLIENT_SECRET}`)}`
-    },
-    data: 'grant_type=client_credentials',
-    method: 'POST'
-  };
-
-  return axios(SPOTIFY_TOKEN_ENDPOINT, config);
-};
+import { SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI, SPOTIFY_AUTHORIZE_ENDPOINT, SPOTIFY_SEARCH_ENDPOINT, SPOTIFY_GET_ARTIST_ENDPOINT, SPOTIFY_GET_RECOMMENDATIONS_ENDPOINT, SPOTIFY_GET_TRACK_AUDIO_FEATURES } from '../constants/constants';
 
 // Have your application request authorization
 const getAuthorizationURL = () => {
@@ -105,7 +90,6 @@ const getTrackAudioFeatures = (token) => {
 };
 
 export default {
-  requestAuthorization: requestAuthorization,
   getAuthorizationURL: getAuthorizationURL,
   searchTrack: searchTrack,
   getArtist: getArtist,

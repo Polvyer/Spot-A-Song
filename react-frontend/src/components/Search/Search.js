@@ -7,7 +7,7 @@ import Spotify from '../../images/spotify.png';
 import { ErrorContext } from '../../context/ErrorContext';
 import { regularErrorHandler } from '../../helpers/regularErrorHandler';
 
-const Search = ({ token, setPlaylist, setTrack }) => {
+const Search = ({ token, setPlaylist, setTrack, loggedIn }) => {
 
   const [ tracks, setTracks ] = useState([]);
   const [ keywords, setKeyWords ] = useState('');
@@ -91,7 +91,7 @@ const Search = ({ token, setPlaylist, setTrack }) => {
       <LogoBox>
         <img src={Logo} alt="logo" className="logo" />
       </LogoBox>
-      <Login onClick={connectWithSpotify}><img className="spotify-logo" alt="Spotify" src={Spotify} /><span>Connect with Spotify</span></Login>
+      {loggedIn ? null : <Login onClick={connectWithSpotify}><img className="spotify-logo" alt="Spotify" src={Spotify} /><span>Connect with Spotify</span></Login>}
       <TextBox className="text-box">
         <HeadingPrimary className="heading-primary">
           <span className="heading-primary-main">Live with music</span>
