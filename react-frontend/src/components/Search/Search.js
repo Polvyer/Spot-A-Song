@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { Header, Login, Nav, LogoBox, TextBox, HeadingPrimary } from './Styles';
 import Dropdown from '../Dropdown/Dropdown';
 import Logo from '../../images/logo.png';
@@ -6,84 +6,16 @@ import SpotifyAPI from '../../api/SpotifyAPI';
 import Spotify from '../../images/spotify.png';
 import { ErrorContext } from '../../context/ErrorContext';
 import { regularErrorHandler } from '../../helpers/regularErrorHandler';
-import { MESSAGE_TYPE, POPUP_WIDTH, POPUP_HEIGHT } from '../../constants/constants';
-import FlaskAPI from '../../api/FlaskAPI';
-import { storeTokenInfo } from '../../helpers/storeTokenInfo';
-import { authenticationErrorHandler } from '../../helpers/authenticationErrorHandler';
 
-const Search = ({ token, setToken, setPlaylist, setTrack, loggedIn }) => {
+const Search = ({ token, setToken, setPlaylist, setTrack, loggedIn, connectWithSpotify }) => {
 
   const [ tracks, setTracks ] = useState([]);
   const [ keywords, setKeyWords ] = useState('');
   const { errors, setErrors } = useContext(ErrorContext);
-  const [ windowOpened, setWindowOpened ] = useState(false);
-
-  // Listen for dispatched messages (from popup window)
-  useEffect(() => {
-
-    if (windowOpened) {
-
-      const getUserAccessToken = async (code) => {
-        try {
-          const response = await FlaskAPI.getUserToken(code.toString());
-          storeTokenInfo(response.data);
-          setToken(null);
-        } catch (err) {
-          authenticationErrorHandler(err, setErrors, errors);
-        }
-      };
-
-      const windowEventHandler = (e) => {
-
-        const hash = e.data; // Extract payload
-
-        if (hash && (hash.type === MESSAGE_TYPE)) {
-
-          setWindowOpened(false);
-
-          if (hash.code) {
-            const code = hash.code; // Extract code
-            getUserAccessToken(code);
-          }
-        }
-      };
-
-      window.addEventListener('message', windowEventHandler, false);
-
-      return () => {
-        window.removeEventListener('message', windowEventHandler);
-      };
-    }
-  }, [windowOpened, setWindowOpened, setToken, token, errors, setErrors]);
 
   const logout = () => {
     localStorage.removeItem('tokenInfo');
     setToken(false);
-  };
-
-  // Redirects user to Spotify authorization page (via popup)
-  const connectWithSpotify = () => {
-    const url = SpotifyAPI.getAuthorizationURL();
-    const LEFT = window.screen.width / 2 - POPUP_WIDTH / 2;
-    const TOP = window.screen.height / 2 - POPUP_HEIGHT / 2;
-
-    // To spawn a new window and then reference it
-    const popupWindow = window.open(
-      url,
-      "Spotify Login",
-      "menubar=no,location=no,resizable=no,scrollbars=no,status=no, width=" +
-        POPUP_WIDTH +
-        ", height=" +
-        POPUP_HEIGHT +
-        ", top=" +
-        TOP +
-        ", left=" +
-        LEFT
-    );
-
-    if (popupWindow) popupWindow.opener = window; // To reference the window that spawned this one
-
-    setWindowOpened(true);
   };
 
   // Reacts to user's input

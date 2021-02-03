@@ -1,6 +1,6 @@
 /* eslint-disable import/no-anonymous-default-export */
 import axios from 'axios';
-import { SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI, SPOTIFY_AUTHORIZE_ENDPOINT, SPOTIFY_SEARCH_ENDPOINT, SPOTIFY_GET_ARTIST_ENDPOINT, SPOTIFY_GET_RECOMMENDATIONS_ENDPOINT, SPOTIFY_GET_TRACK_AUDIO_FEATURES } from '../constants/constants';
+import { SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI, SPOTIFY_AUTHORIZE_ENDPOINT, SPOTIFY_SEARCH_ENDPOINT, SPOTIFY_GET_ARTIST_ENDPOINT, SPOTIFY_GET_RECOMMENDATIONS_ENDPOINT, SPOTIFY_GET_TRACK_AUDIO_FEATURES, SPOTIFY_GET_USER_PROFILE } from '../constants/constants';
 
 // Have your application request authorization
 const getAuthorizationURL = () => {
@@ -74,6 +74,54 @@ const getRecommendations = (token, track_id, artist_id, genres) => {
   return axios(url, config);
 };
 
+// Get detailed profile information about the current user
+const getUserProfile = (token) => {
+
+  const config = {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+    method: 'GET'
+  };
+
+  return axios(SPOTIFY_GET_USER_PROFILE, config);
+};
+
+// Create a playlist for a Spotify user
+const createPlaylist = (token, user_id, name, publi) => {
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    method: 'POST',
+    data: {
+      name,
+      public: publi
+    }
+  };
+
+  return axios(`https://api.spotify.com/v1/users/${user_id}/playlists`, config);
+};
+
+// Add one or more items to a user’s playlist
+const addToPlaylist = (token, playlist_id, listOfUris) => {
+
+  const config = {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+    data: {
+      "uris": listOfUris,
+    }
+  };
+
+  return axios(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, config);
+};
+
 const getTrackAudioFeatures = (token) => {
 
   const config = {
@@ -93,6 +141,9 @@ export default {
   getAuthorizationURL: getAuthorizationURL,
   searchTrack: searchTrack,
   getArtist: getArtist,
+  getUserProfile: getUserProfile,
+  createPlaylist: createPlaylist,
+  addToPlaylist: addToPlaylist,
   getRecommendations: getRecommendations,
   getTrackAudioFeatures: getTrackAudioFeatures,
 }

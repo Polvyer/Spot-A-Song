@@ -8,12 +8,12 @@ const Container = styled.div`
   flex-wrap: wrap;
 `;
 
-const Playlist = ({ track, playlist, setPlaylist }) => {
+const Playlist = ({ token, track, playlist, setPlaylist, loggedIn, connectWithSpotify }) => {
 
   return (
     <Container>
       <Player track={track} playlist={playlist} setPlaylist={setPlaylist} />
-      <Information />
+      <Information playlist={playlist} token={token} loggedIn={loggedIn} connectWithSpotify={connectWithSpotify} />
     </Container>
   );
 };

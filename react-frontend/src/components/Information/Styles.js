@@ -25,7 +25,7 @@ const Container = styled.div`
     border: 1px solid #f3f3f5;
     line-height: 1.2rem;  
     
-    :hover, :focus {
+    :focus {
       outline: none;
       background-color: #73c9b9;
       color: white;
@@ -56,6 +56,10 @@ const Container = styled.div`
     font-size: 1rem;
     border-radius: 4px;
     outline: none;
+
+    :hover {
+      background-color: #1d6395;
+    }
 
     .spotify-logo {
       width: 1em;

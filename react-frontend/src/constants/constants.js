@@ -2,6 +2,7 @@
 const SEC_TO_MS = 1000;
 const TWO_MINUTE_DELAY_IN_MS = 120000;
 const MESSAGE_TYPE = 'SPOTIFY';
+const DEFAULT_PLAYLIST_NAME = 'New playlist by Spot-A-Song';
 
 /* Popup Window */
 const POPUP_WIDTH = 400;
@@ -23,11 +24,13 @@ const SPOTIFY_SEARCH_ENDPOINT = "https://api.spotify.com/v1/search";
 const SPOTIFY_GET_ARTIST_ENDPOINT = "https://api.spotify.com/v1/artists";
 const SPOTIFY_GET_RECOMMENDATIONS_ENDPOINT = "https://api.spotify.com/v1/recommendations";
 const SPOTIFY_GET_TRACK_AUDIO_FEATURES = "https://api.spotify.com/v1/audio-features";
+const SPOTIFY_GET_USER_PROFILE = "https://api.spotify.com/v1/me";
 
 export {
   SEC_TO_MS,
   TWO_MINUTE_DELAY_IN_MS,
   MESSAGE_TYPE,
+  DEFAULT_PLAYLIST_NAME,
   POPUP_WIDTH,
   POPUP_HEIGHT,
   FLASK_TOKEN_ENDPOINT,
@@ -38,4 +41,5 @@ export {
   SPOTIFY_GET_ARTIST_ENDPOINT,
   SPOTIFY_GET_RECOMMENDATIONS_ENDPOINT,
   SPOTIFY_GET_TRACK_AUDIO_FEATURES,
+  SPOTIFY_GET_USER_PROFILE,
 };

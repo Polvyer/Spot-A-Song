@@ -65,7 +65,7 @@ const Track = ({ track, trackPlaying, setTrackPlaying, removeTrack, handleDragSt
           <Circle
             color={track.preview_url ? '#257bba' : '#88899f'}
             iconColor='white'
-            size='56'
+            size={56}
             played={playerState.played}
             loaded={playerState.loaded}
             playing={playing}
