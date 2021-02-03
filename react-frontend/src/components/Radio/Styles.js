@@ -22,7 +22,7 @@ const RadioInput = styled.label`
     height: 0;
     :checked + .radio__control {
       background: radial-gradient(#73c9b9 50%, white 51%);
-      background: #73c9b9;
+      /*background: #73c9b9;*/
       border: 2px solid #73c9b9;
     }
   }

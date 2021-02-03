@@ -13,7 +13,7 @@ const Playlist = ({ token, track, playlist, setPlaylist, loggedIn, connectWithSp
   return (
     <Container>
       <Player track={track} playlist={playlist} setPlaylist={setPlaylist} />
-      <Information playlist={playlist} token={token} loggedIn={loggedIn} connectWithSpotify={connectWithSpotify} />
+      <Information playlist={playlist} track={track} token={token} loggedIn={loggedIn} connectWithSpotify={connectWithSpotify} />
     </Container>
   );
 };

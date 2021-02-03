@@ -47,4 +47,4 @@ const Cover = styled.div`
 export {
   Container,
   Cover,
-}
+};

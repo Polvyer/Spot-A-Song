@@ -5,11 +5,14 @@ import Radio from '../Radio/Radio';
 import { useForm } from '../../hooks/useForm';
 import SpotifyAPI from '../../api/SpotifyAPI';
 import { DEFAULT_PLAYLIST_NAME } from '../../constants/constants';
+import Modal from '../Modal/Modal';
 
-const Information = ({ token, loggedIn, connectWithSpotify, playlist }) => {
+const Information = ({ token, loggedIn, connectWithSpotify, playlist, track }) => {
 
   const [ values, setValues ] = useForm({ title: '', status: 'public' });
   const [ saved, setSaved ] = useState(false); // Allows the useEffect 'callback' to run
+  const [ showModal, setShowModal ] = useState(false);
+  const [ playlistInfo, setPlaylistInfo ] = useState({ url: '', uri: ''});
 
   // Get the unique string identifying the Spotify user
   const getUserID = async (token) => {
@@ -22,6 +25,7 @@ const Information = ({ token, loggedIn, connectWithSpotify, playlist }) => {
     const name = title ? title : DEFAULT_PLAYLIST_NAME;
     const publi = status === 'public' ? 'true' : 'false';
     const response = await SpotifyAPI.createPlaylist(token, user_id, name, publi);
+    setPlaylistInfo({ url: response.data.external_urls.spotify, uri: response.data.uri });
     return response.data.id;
   };
 
@@ -37,6 +41,7 @@ const Information = ({ token, loggedIn, connectWithSpotify, playlist }) => {
     const user_id = await getUserID(token);
     const playlist_id = await getPlaylistID(token, user_id, values.title, values.status);
     await populatePlaylist(token, playlist_id, playlist);
+    setShowModal(true); // Show preview of playlist
   }, [playlist, token, values.status, values.title]);
 
   // A 'callback' that runs after the user finishes connecting with Spotify
@@ -49,7 +54,7 @@ const Information = ({ token, loggedIn, connectWithSpotify, playlist }) => {
 
   const saveOnSpotify = async () => {
     if (loggedIn) {
-      makePlaylist();
+      await makePlaylist();
     } else {
       connectWithSpotify();
       setSaved(true);
@@ -58,6 +63,7 @@ const Information = ({ token, loggedIn, connectWithSpotify, playlist }) => {
   
   return (
     <Container>
+      {showModal ? <Modal playlistInfo={playlistInfo} hideModal={setShowModal.bind(null, false)} albumCover={track.album.images[0].url} /> : null}
       <h3 className="info-title">Playlist Information</h3>
       <input className="info-input-title" name="title" value={values.title} onChange={setValues} type="text" placeholder="Title" />
       <h4 className="info-status">Status</h4>
