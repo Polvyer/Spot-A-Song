@@ -2,12 +2,7 @@ import React from 'react';
 import x from '../../images/x.svg';
 import { Background, Container, Section, Cover, Buttons } from './Styles';
 
-const Modal = ({ albumCover, hideModal, playlistInfo }) => {
-
-  const openInNewTab = (url) => {
-    const win = window.open(url, '_blank');
-    win.focus();
-  };
+const Modal = ({ albumCover, hideModal, playlistInfo, openInNewTab }) => {
   
   return (
     <Background>

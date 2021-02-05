@@ -8,6 +8,10 @@ const Li = styled.li`
   display: flex;
   justify-content: space-between;
 
+  @media screen and (max-width: 1029px) {
+    width: 100%;
+  }
+
   .drag {
     visibility: hidden;
     margin-right: 10px;

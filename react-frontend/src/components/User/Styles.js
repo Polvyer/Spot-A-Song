@@ -2,11 +2,12 @@ import styled from 'styled-components';
 
 const Header = styled.header`
   height: 65.5vh;
-  background-image: linear-gradient(
-    to bottom,
-    #257bba,
-    #73c9b9);
+  background-color: #257bba;
   position: relative;
+
+  @media screen and (min-height: 800px) {
+    height: 50vh;
+  }
 `;
 
 const LogoBox = styled.div`
@@ -20,37 +21,6 @@ const LogoBox = styled.div`
 
   @media screen and (max-width: 500px) {
     top: 10%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-`;
-
-const Login = styled.button`
-  position: absolute;
-  right: 25px;
-  top: 40px;
-  padding: 15px;
-  background-color: transparent;
-  color: white;
-  border: 1px solid #fff;
-  font-weight: 400;
-  cursor: pointer;
-  display: block;
-  border-radius: 4px;
-  outline: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-  letter-spacing: .5px;
-
-  .spotify-logo {
-    width: 1.4em;
-    margin-right: 5px;
-  }
-
-  @media screen and (max-width: 500px) {
-    top: 26%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
@@ -86,6 +56,20 @@ const Nav = styled.nav`
   }
 `;
 
+const InputBox = styled.div`
+  z-index: 3;
+  position: absolute;
+  top: 45px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  text-align: center;
+  width: fit-content;
+
+  @media screen and (max-width: 1100px) {
+    display: none;
+  }
+`;
+
 const TextBox = styled.div`
   position: absolute;
   top: 50%;
@@ -94,12 +78,12 @@ const TextBox = styled.div`
   text-align: center;
   width: 100%;
 
-  @media screen and (max-width: 800px) {
+  @media screen and (max-width: 500px) {
     top: 55%;
   }
 
-  @media screen and (max-width: 500px) {
-    top: 65%;
+  @media screen and (max-height: 1000px) {
+    top: 50%;
   }
 `;
 
@@ -108,28 +92,42 @@ const HeadingPrimary = styled.h1`
   margin-bottom: 60px;
   line-height: 1.4em;
   margin-bottom: 25px;
+  width: 60%;
+  margin: 0 auto;
 
   .heading-primary-main {
     display: block;
     color: #f2f0ea;
     font-size: 2.5rem;
     font-weight: 700;
+    line-height: 50px;
   }
+`;
 
-  .heading-primary-sub {
-    display: block;
-    color: #e6e6e6;
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: .5px;
+const Avatar = styled.figure`
+  width: 13rem;
+  height: 13rem;
+  border-radius: 50%;
+  overflow: hidden;
+  position: absolute;
+  bottom: -6rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  box-shadow: 0 0 0 8px rgb(115 201 185 / 20%);
+  border: 8px solid rgba(115, 201, 185, .5);
+
+  .avatar {
+    width: 100%;
+    height: 100%;
   }
 `;
 
 export {
   Header,
-  Login,
-  Nav,
   LogoBox,
+  Nav,
+  InputBox,
   TextBox,
   HeadingPrimary,
+  Avatar,
 };

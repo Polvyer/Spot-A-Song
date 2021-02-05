@@ -13,6 +13,7 @@ const Ul = styled.ul`
     overflow: hidden;
     overflow-y: visibile;
     height: auto;
+    padding: 0;
   }
 
   .hidden {
