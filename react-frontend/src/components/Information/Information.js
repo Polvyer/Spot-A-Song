@@ -7,7 +7,7 @@ import SpotifyAPI from '../../api/SpotifyAPI';
 import { DEFAULT_PLAYLIST_NAME } from '../../constants/constants';
 import FlaskAPI from '../../api/FlaskAPI';
 
-const Information = ({ token, loggedIn, connectWithSpotify, playlist, setShowIcons, setShowModal, setPlaylistInfo, track }) => {
+const Information = ({ token, loggedIn, connectWithSpotify, playlist, setShowIcons, setShowModal, setPlaylistInfo, track, setShowLoader }) => {
 
   const [ values, setValues ] = useForm({ title: '', status: 'public' });
   const [ saved, setSaved ] = useState(false); // Allows the useEffect 'callback' to run
@@ -36,13 +36,15 @@ const Information = ({ token, loggedIn, connectWithSpotify, playlist, setShowIco
 
   // Make the playlist of your dreams based on a song
   const makePlaylist = useCallback(async () => {
+    setShowLoader(true); // Show loader
     const user_id = await getUserID(token);
     const playlist_id = await getPlaylistID(token, user_id, values.title, values.status);
     await populatePlaylist(token, playlist_id, playlist);
     await FlaskAPI.createPlaylist(playlist_id, values.status, user_id, track.id, playlist.map(track => track.id));
+    setShowLoader(false); // Hide loader
     setShowModal(true); // Show preview of playlist
     setShowIcons(true); // Show icons
-  }, [playlist, token, values.status, values.title, setShowIcons, setShowModal, getPlaylistID, track.id]);
+  }, [playlist, token, values.status, values.title, setShowIcons, setShowModal, getPlaylistID, track.id, setShowLoader]);
 
   // A 'callback' that runs after the user finishes connecting with Spotify
   useEffect(() => {

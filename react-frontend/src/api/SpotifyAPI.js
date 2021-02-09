@@ -65,7 +65,7 @@ const getRecommendations = (token, track_id, artist_id, genres) => {
   };
 
   // Query Parameters
-  const limit = 10;
+  const limit = 100;
   const seed_genres = genres.join('%2C');
   const params = `limit=${limit}&seed_artists=${artist_id}&seed_genres=${seed_genres}&seed_tracks=${track_id}`;
 
@@ -122,6 +122,34 @@ const addToPlaylist = (token, playlist_id, listOfUris) => {
   return axios(`https://api.spotify.com/v1/playlists/${playlist_id}/tracks`, config);
 };
 
+// Get Spotify catalog information about artists similar to a given artist
+const getRelatedArtists = (token, artist_id) => {
+
+  const config = {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+    method: 'GET',
+  };
+
+  return axios(`https://api.spotify.com/v1/artists/${artist_id}/related-artists`, config);
+};
+
+// Get Spotify catalog information about an artist’s top tracks by country
+const getArtistsTopTracks = (token, artist_id) => {
+
+  const config = {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+    method: 'GET',
+  };
+
+  const market = 'US';
+
+  return axios(`https://api.spotify.com/v1/artists/${artist_id}/top-tracks?market=${market}`, config);
+};
+
 const getTrackAudioFeatures = (token) => {
 
   const config = {
@@ -140,7 +168,9 @@ const getTrackAudioFeatures = (token) => {
 export default {
   getAuthorizationURL: getAuthorizationURL,
   searchTrack: searchTrack,
+  getRelatedArtists: getRelatedArtists,
   getArtist: getArtist,
+  getArtistsTopTracks: getArtistsTopTracks,
   getUserProfile: getUserProfile,
   createPlaylist: createPlaylist,
   addToPlaylist: addToPlaylist,
