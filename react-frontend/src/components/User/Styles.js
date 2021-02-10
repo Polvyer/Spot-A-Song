@@ -123,7 +123,7 @@ const Avatar = styled.figure`
 `;
 
 const Body = styled.div`
-  padding: 120px 50px;
+  padding: 120px 40px 40px 40px;
 `;
 
 const None = styled.h3`

@@ -8,7 +8,7 @@ import Deck from '../Deck/Deck';
 import { errorHandler } from '../../helpers/errorHandler';
 import { ErrorContext } from '../../context/ErrorContext';
 
-const User = ({ setShowIcons, token, setShowPlaylists, logout, tracks, keywords, handleSearchInputChange, onTrackSelect, setPlaylistHome, setTrack, setShowLoader }) => {
+const User = ({ setShowIcons, token, setShowPlaylists, logout, tracks, keywords, handleSearchInputChange, onTrackSelect, setPlaylistHome, setTrack, setShowLoader, children }) => {
 
   const [ user, setUser ] = useState(null);
   const [ playlists, setPlaylists ] = useState([]);
@@ -87,9 +87,9 @@ const User = ({ setShowIcons, token, setShowPlaylists, logout, tracks, keywords,
     } else {
       return (
         <>
-          <h3 style={{"marginTop": "20px"}}>Public Playlists</h3>
+          <h2 style={{"marginTop": "20px"}}>Public Playlists</h2>
           {publicPlaylists.length > 0 ? <Deck onTrackClick={onTrackClick} playlists={publicPlaylists} /> : <None>You don't have any public playlists saved</None>}
-          <h3>Private Playlists</h3>
+          <h2>Private Playlists</h2>
           {privatePlaylists.length > 0 ? <Deck onTrackClick={onTrackClick} playlists={privatePlaylists} /> : <None>You don't have any private playlists saved</None>}
         </>
       );
@@ -122,6 +122,7 @@ const User = ({ setShowIcons, token, setShowPlaylists, logout, tracks, keywords,
         </Toggles>
         { renderContent() }
       </Body>
+      {children}
     </>
   );
 };

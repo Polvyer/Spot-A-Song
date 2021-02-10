@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   margin: 0 20px;
+  width: 10em;
 
   .album-cover {
     max-width: 100%;

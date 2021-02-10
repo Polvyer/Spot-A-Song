@@ -1,6 +1,9 @@
 /* eslint-disable import/no-anonymous-default-export */
 import axios from 'axios';
-import { SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI, SPOTIFY_AUTHORIZE_ENDPOINT, SPOTIFY_SEARCH_ENDPOINT, SPOTIFY_GET_ARTIST_ENDPOINT, SPOTIFY_GET_RECOMMENDATIONS_ENDPOINT, SPOTIFY_GET_TRACK_AUDIO_FEATURES, SPOTIFY_GET_USER_PROFILE, SPOTIFY_SEVERAL_TRACKS_ENDPOINT } from '../constants/constants';
+import { SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI, SPOTIFY_AUTHORIZE_ENDPOINT, 
+         SPOTIFY_SEARCH_ENDPOINT, SPOTIFY_GET_ARTIST_ENDPOINT, SPOTIFY_GET_RECOMMENDATIONS_ENDPOINT, 
+         SPOTIFY_GET_TRACK_AUDIO_FEATURES, SPOTIFY_GET_USER_PROFILE, SPOTIFY_SEVERAL_TRACKS_ENDPOINT, 
+         SPOTIFY_GET_FEATURED_PLAYLISTS_ENDPOINT } from '../constants/constants';
 
 // Have your application request authorization
 const getAuthorizationURL = () => {
@@ -169,6 +172,32 @@ const getSeveralTracks = (token, lstOfIds) => {
   return axios(url, config);
 };
 
+// Get a list of Spotify featured playlists
+const getFeaturedPlaylists = (token) => {
+  
+  const config = {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+    method: 'GET',
+  };
+
+  return axios(SPOTIFY_GET_FEATURED_PLAYLISTS_ENDPOINT, config);
+};
+
+// Get a playlist owned by a Spotify user
+const getPlaylist = (token, playlist_id) => {
+
+  const config = {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+    method: 'GET',
+  };
+
+  return axios(`https://api.spotify.com/v1/playlists/${playlist_id}`, config);
+};
+
 const getTrackAudioFeatures = (token) => {
 
   const config = {
@@ -192,7 +221,9 @@ export default {
   getSeveralTracks: getSeveralTracks,
   getArtistsTopTracks: getArtistsTopTracks,
   getUserProfile: getUserProfile,
+  getPlaylist: getPlaylist,
   createPlaylist: createPlaylist,
+  getFeaturedPlaylists: getFeaturedPlaylists,
   addToPlaylist: addToPlaylist,
   getRecommendations: getRecommendations,
   getTrackAudioFeatures: getTrackAudioFeatures,

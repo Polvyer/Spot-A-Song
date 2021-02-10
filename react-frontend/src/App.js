@@ -14,6 +14,7 @@ import User from './components/User/User';
 import { regularErrorHandler } from './helpers/regularErrorHandler';
 import { algorithm } from './helpers/algorithm';
 import Loader from './components/Loader/Loader';
+import Footer from './components/Footer/Footer';
 
 const App = () => {
 
@@ -236,12 +237,19 @@ const App = () => {
       if (playlist.length > 0) {
         return <Playlist showIcons={showIcons} setShowIcons={setShowIcons} setShowLoader={setShowLoader} setShowPlaylists={setShowPlaylists} token={token} loggedIn={loggedIn} track={track} playlist={playlist} setPlaylist={setPlaylist} connectWithSpotify={connectWithSpotify} />
       } else if (showPlaylists) {
-        return <User setShowIcons={setShowIcons} setShowLoader={setShowLoader} setPlaylistHome={setPlaylist} setTrack={setTrack} tracks={tracks} keywords={keywords} handleSearchInputChange={handleSearchInputChange} onTrackSelect={onTrackSelect} token={token} logout={logout} setShowPlaylists={setShowPlaylists} />
+        return (
+          <>
+            <User setShowIcons={setShowIcons} setShowLoader={setShowLoader} setPlaylistHome={setPlaylist} setTrack={setTrack} tracks={tracks} keywords={keywords} handleSearchInputChange={handleSearchInputChange} onTrackSelect={onTrackSelect} token={token} logout={logout} setShowPlaylists={setShowPlaylists}>
+              <Footer />
+            </User>
+          </>
+        );
       } else {
         return (
           <>
             <Search tracks={tracks} keywords={keywords} handleSearchInputChange={handleSearchInputChange} onTrackSelect={onTrackSelect} logout={logout} setShowPlaylists={setShowPlaylists} track={track} setTrack={setTrack} token={token} setToken={setToken} setPlaylist={setPlaylist} loggedIn={loggedIn} connectWithSpotify={connectWithSpotify} />
-            <Other />
+            <Other token={token} onTrackSelect={onTrackSelect} />
+            <Footer />
           </>
         )
       }
