@@ -17,10 +17,10 @@ const Container = styled.div`
   }
 `;
 
-const Card = ({ playlist }) => {
+const Card = ({ playlist, onTrackClick }) => {
   return (
     <Container>
-      <img className="album-cover" src={playlist.track.album.images[0].url} alt="album-cover" />
+      <img onClick={onTrackClick.bind(null, playlist.playlist_id, playlist.track)}className="album-cover" src={playlist.track.album.images[0].url} alt="album-cover" />
       <div className="container">
         <h4><b>{playlist.playlist_name.length > 20 ? playlist.playlist_name.split('').slice(0, 15).join('') + '...' : playlist.playlist_name}</b></h4>
         <p>Created {new Date(playlist.timestamp).toLocaleDateString()}</p>

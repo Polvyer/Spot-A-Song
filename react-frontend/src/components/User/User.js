@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Logo from '../../images/logo.png';
 import SpotifyAPI from '../../api/SpotifyAPI';
 import FlaskAPI from '../../api/FlaskAPI';
 import Dropdown from '../Dropdown/Dropdown';
 import { Header, LogoBox, Nav, InputBox, TextBox, HeadingPrimary, Avatar, Body, Toggles, None } from './Styles';
 import Deck from '../Deck/Deck';
+import { errorHandler } from '../../helpers/errorHandler';
+import { ErrorContext } from '../../context/ErrorContext';
 
-const User = ({ token, setShowPlaylists, logout, tracks, keywords, handleSearchInputChange, onTrackSelect }) => {
+const User = ({ setShowIcons, token, setShowPlaylists, logout, tracks, keywords, handleSearchInputChange, onTrackSelect, setPlaylistHome, setTrack, setShowLoader }) => {
 
   const [ user, setUser ] = useState(null);
   const [ playlists, setPlaylists ] = useState([]);
   const [ toggleLikes, setToggleLikes ] = useState(false);
+  const { errors, setErrors } = useContext(ErrorContext);
 
   // Get user's playlists
   useEffect(() => {
@@ -24,16 +27,15 @@ const User = ({ token, setShowPlaylists, logout, tracks, keywords, handleSearchI
           playlists.forEach((playlist, index) => playlist.track = response.data.tracks[index]);
           setPlaylists(playlists);
         } catch (err) {
-          // TO-DO
+          errorHandler(err, setErrors, errors);
         }
       }).catch(err => {
-        console.log('Hi');
-        // TO-DO
+        // Normal for user's who have never created a playlist
       });
     }).catch(err => {
-      // TO-DO
+      errorHandler(err, setErrors, errors);
     });
-  }, [token]);
+  }, [token, setErrors, errors]);
 
   // Split playlists into public and private playlists
   const [ publicPlaylists, privatePlaylists ] = playlists.reduce((accum, playlist) => {
@@ -45,6 +47,40 @@ const User = ({ token, setShowPlaylists, logout, tracks, keywords, handleSearchI
     return accum;
   }, [[], []]);
 
+  // When a user clicks on a track
+  const onTrackClick = async (playlist_id, track) => {
+
+    // Show loader
+    setShowLoader(true);
+
+    let response;
+
+    // Get playlist tracks
+    try {
+      response = await FlaskAPI.getPlaylist(playlist_id);
+    } catch (err) {
+      errorHandler(err, setErrors, errors);
+      setShowLoader(false);
+      return;
+    }
+
+    // Get information for the tracks
+    const lstOfIds = response.data.tracks.map(track => track.track_id);
+    try {
+      response = await SpotifyAPI.getSeveralTracks(token, lstOfIds);
+    } catch (err) {
+      errorHandler(err, setErrors, errors);
+      setShowLoader(false);
+      return;
+    }
+
+    // Mount Playlist component
+    setTrack(track);
+    setPlaylistHome(response.data.tracks);
+    setShowIcons(true);
+    setShowLoader(false);
+  };
+
   const renderContent = () => {
     if (toggleLikes) {
       return <None>You don't have likes</None>
@@ -52,9 +88,9 @@ const User = ({ token, setShowPlaylists, logout, tracks, keywords, handleSearchI
       return (
         <>
           <h3 style={{"marginTop": "20px"}}>Public Playlists</h3>
-          {publicPlaylists.length > 0 ? <Deck playlists={publicPlaylists} /> : <None>You don't have any public playlists saved</None>}
+          {publicPlaylists.length > 0 ? <Deck onTrackClick={onTrackClick} playlists={publicPlaylists} /> : <None>You don't have any public playlists saved</None>}
           <h3>Private Playlists</h3>
-          {privatePlaylists.length > 0 ? <Deck playlists={privatePlaylists} /> : <None>You don't have any private playlists saved</None>}
+          {privatePlaylists.length > 0 ? <Deck onTrackClick={onTrackClick} playlists={privatePlaylists} /> : <None>You don't have any private playlists saved</None>}
         </>
       );
     }

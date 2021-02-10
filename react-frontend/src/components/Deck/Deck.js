@@ -13,10 +13,10 @@ const Container = styled.div`
   }
 `;
 
-const Deck = ({ playlists }) => {
+const Deck = ({ playlists, onTrackClick }) => {
   return (
     <Container>
-      {playlists.map((playlist, index) => <Card key={index} playlist={playlist} />)}
+      {playlists.map((playlist) => <Card onTrackClick={onTrackClick} key={playlist.playlist_id} playlist={playlist} />)}
     </Container>
   );
 };

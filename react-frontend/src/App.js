@@ -26,6 +26,7 @@ const App = () => {
   const [ keywords, setKeyWords ] = useState('');
   const [ windowOpened, setWindowOpened ] = useState(false);
   const [ showLoader, setShowLoader ] = useState(false);
+  const [ showIcons, setShowIcons ] = useState(false);
 
   // Listen for dispatched messages (from popup window)
   useEffect(() => {
@@ -211,9 +212,6 @@ const App = () => {
     listOfTrackLists.push(listOfReccs); // Append recommended tracks onto list of lists
     const newPlaylist = algorithm(listOfTrackLists, track);
 
-    // Insert main track into the beginning of the playlist
-    newPlaylist.unshift(track);
-
     // Display playlist
     setPlaylist(newPlaylist);
 
@@ -236,9 +234,9 @@ const App = () => {
       return <Loader />
     } else {
       if (playlist.length > 0) {
-        return <Playlist setShowLoader={setShowLoader} setShowPlaylists={setShowPlaylists} token={token} loggedIn={loggedIn} track={track} playlist={playlist} setPlaylist={setPlaylist} connectWithSpotify={connectWithSpotify} />
+        return <Playlist showIcons={showIcons} setShowIcons={setShowIcons} setShowLoader={setShowLoader} setShowPlaylists={setShowPlaylists} token={token} loggedIn={loggedIn} track={track} playlist={playlist} setPlaylist={setPlaylist} connectWithSpotify={connectWithSpotify} />
       } else if (showPlaylists) {
-        return <User tracks={tracks} keywords={keywords} handleSearchInputChange={handleSearchInputChange} onTrackSelect={onTrackSelect} token={token} logout={logout} setShowPlaylists={setShowPlaylists} />
+        return <User setShowIcons={setShowIcons} setShowLoader={setShowLoader} setPlaylistHome={setPlaylist} setTrack={setTrack} tracks={tracks} keywords={keywords} handleSearchInputChange={handleSearchInputChange} onTrackSelect={onTrackSelect} token={token} logout={logout} setShowPlaylists={setShowPlaylists} />
       } else {
         return (
           <>

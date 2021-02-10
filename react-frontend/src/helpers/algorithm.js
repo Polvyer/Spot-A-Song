@@ -112,7 +112,14 @@ export const algorithm = (lstOfLsts, track) => {
 
   // Creates the final playlist
   const createPlaylist = () => {
-    return alternate(sortByPopularity(closest(alternate(sortByPopularity(removeDuplicates(combineLists(lstOfLsts)))), track.popularity, 30)));
+    // Run list through a series of functions
+    const newPlaylist = alternate(sortByPopularity(closest(alternate(sortByPopularity(removeDuplicates(combineLists(lstOfLsts)))), track.popularity, 30)));
+
+    // Insert main track into the beginning of the playlist
+    newPlaylist.unshift(track);
+
+    // Remove duplicates and return
+    return removeDuplicates(newPlaylist);
   };
 
   return createPlaylist(); // Return playlist

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Player from '../Player/Player';
 import Information from '../Information/Information';
 import styled from 'styled-components';
@@ -11,12 +11,18 @@ const Container = styled.div`
   flex-wrap: wrap;
 `;
 
-const Playlist = ({ token, track, playlist, setPlaylist, loggedIn, connectWithSpotify, setShowPlaylists }) => {
+const Playlist = ({ showIcons, setShowIcons, token, track, playlist, setPlaylist, loggedIn, connectWithSpotify, setShowPlaylists }) => {
 
-  const [ showIcons, setShowIcons ] = useState(false);
   const [ showModal, setShowModal ] = useState(false);
   const [ playlistInfo, setPlaylistInfo ] = useState({ url: '', uri: ''});
   const [ showLoader, setShowLoader ] = useState(false);
+
+  // Component unmount
+  useEffect(() => {
+    return () => {
+      setShowIcons(false);
+    }
+  }, [setShowIcons]);
 
   const openInNewTab = (url) => {
     const win = window.open(url, '_blank');
