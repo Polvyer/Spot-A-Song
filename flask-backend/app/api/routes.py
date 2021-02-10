@@ -84,7 +84,7 @@ def create_playlist():
         user = User()
         user.from_dict(data)
         db.session.add(user)
-    playlist = Playlist(user_id=user.user_id, status=data['status'], track_id=data['track_id'], playlist_id=data['playlist_id'])
+    playlist = Playlist(user_id=user.user_id, status=data['status'], track_id=data['track_id'], playlist_id=data['playlist_id'], name=data['playlist_name'])
     db.session.add(playlist)
     for track in data['tracks']:
         trk = Track.query.filter_by(track_id=track).first()

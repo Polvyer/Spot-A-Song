@@ -46,6 +46,7 @@ class Track(db.Model):
 
 class Playlist(db.Model):
     playlist_id = db.Column(db.String(64), index=True, unique=True, primary_key=True)
+    name = db.Column(db.String(64))
     status = db.Column(db.String(10))
     user_id = db.Column(db.String(64), db.ForeignKey('user.user_id'))
     track_id = db.Column(db.String(64), index=True)
@@ -67,6 +68,7 @@ class Playlist(db.Model):
             'track_id': self.track_id,
             'user_id': self.user_id,
             'timestamp': self.timestamp,
+            'playlist_name': self.name,
         }
         return data
 

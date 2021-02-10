@@ -20,6 +20,7 @@ const SPOTIFY_CLIENT_ID = '6fac3fef5c2c421cad275fb6fd4e0516';
 const SPOTIFY_REDIRECT_URI = 'http://localhost:3000';
 
 /* Spotify Endpoints */
+const SPOTIFY_SEVERAL_TRACKS_ENDPOINT = 'https://api.spotify.com/v1/tracks';
 const SPOTIFY_AUTHORIZE_ENDPOINT = "https://accounts.spotify.com/authorize";
 const SPOTIFY_SEARCH_ENDPOINT = "https://api.spotify.com/v1/search";
 const SPOTIFY_GET_ARTIST_ENDPOINT = "https://api.spotify.com/v1/artists";
@@ -39,6 +40,7 @@ export {
   FLASK_CREATE_PLAYLIST_ENDPOINT,
   SPOTIFY_CLIENT_ID,
   SPOTIFY_REDIRECT_URI,
+  SPOTIFY_SEVERAL_TRACKS_ENDPOINT,
   SPOTIFY_AUTHORIZE_ENDPOINT,
   SPOTIFY_SEARCH_ENDPOINT,
   SPOTIFY_GET_ARTIST_ENDPOINT,

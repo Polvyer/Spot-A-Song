@@ -3,14 +3,15 @@ import axios from 'axios';
 import { FLASK_TOKEN_ENDPOINT, FLASK_CREATE_PLAYLIST_ENDPOINT, FLASK_BASE_URL } from '../constants/constants';
 
 // Create playlist
-const createPlaylist = (playlist_id, status, user_id, track_id, tracks) => {
+const createPlaylist = (playlist_id, status, user_id, track_id, tracks, playlist_name) => {
 
   const payload = {
     playlist_id,
     status,
     user_id,
     track_id,
-    tracks
+    tracks,
+    playlist_name,
   };
 
   const config = {

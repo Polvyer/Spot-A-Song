@@ -19,10 +19,9 @@ const Information = ({ token, loggedIn, connectWithSpotify, playlist, setShowIco
   };
 
   // Creates an empty playlist and returns the playlist id
-  const getPlaylistID = useCallback(async (token, user_id, title, status) => {
-    const name = title ? title : DEFAULT_PLAYLIST_NAME;
+  const getPlaylistID = useCallback(async (token, user_id, playlist_name, status) => {
     const publi = status === 'public' ? 'true' : 'false';
-    const response = await SpotifyAPI.createPlaylist(token, user_id, name, publi);
+    const response = await SpotifyAPI.createPlaylist(token, user_id, playlist_name, publi);
     setPlaylistInfo({ url: response.data.external_urls.spotify, uri: response.data.uri });
     return response.data.id;
   }, [setPlaylistInfo]);
@@ -37,10 +36,11 @@ const Information = ({ token, loggedIn, connectWithSpotify, playlist, setShowIco
   // Make the playlist of your dreams based on a song
   const makePlaylist = useCallback(async () => {
     setShowLoader(true); // Show loader
+    const playlist_name = values.title ? values.title : DEFAULT_PLAYLIST_NAME;
     const user_id = await getUserID(token);
-    const playlist_id = await getPlaylistID(token, user_id, values.title, values.status);
+    const playlist_id = await getPlaylistID(token, user_id, playlist_name, values.status);
     await populatePlaylist(token, playlist_id, playlist);
-    await FlaskAPI.createPlaylist(playlist_id, values.status, user_id, track.id, playlist.map(track => track.id));
+    await FlaskAPI.createPlaylist(playlist_id, values.status, user_id, track.id, playlist.map(track => track.id), playlist_name);
     setShowLoader(false); // Hide loader
     setShowModal(true); // Show preview of playlist
     setShowIcons(true); // Show icons

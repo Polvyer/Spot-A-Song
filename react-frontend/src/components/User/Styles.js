@@ -122,6 +122,54 @@ const Avatar = styled.figure`
   }
 `;
 
+const Body = styled.div`
+  padding: 120px 50px;
+`;
+
+const None = styled.h3`
+  margin: 20px 0;
+  text-align: center;
+  color: lightslategray;
+`;
+
+const Toggles = styled.div`
+  display: flex;
+  justify-content: center;
+
+  .toggle {
+    border: 1px solid black;
+    font-size: 1.1.rem;
+    color: #257bba;
+    padding: 15px 20px;
+    background-color: #f3f3f5;
+    line-height: 1.42857143;
+    font-size: 500;
+    border: none;
+    cursor: pointer;
+
+    :hover {
+      background-color: #eee;
+    }
+  }
+
+  .toggle1 {
+    border-radius: 4px 0 0 4px;
+  }
+
+  .toggle2 {
+    border-radius: 0 4px 4px 0;
+  }
+
+  .toggled {
+    color: white;
+    background-color: #257bba;
+
+    :hover {
+      background-color: #257bba;
+    }
+  }
+`;
+
 export {
   Header,
   LogoBox,
@@ -130,4 +178,7 @@ export {
   TextBox,
   HeadingPrimary,
   Avatar,
+  Body,
+  Toggles,
+  None,
 };

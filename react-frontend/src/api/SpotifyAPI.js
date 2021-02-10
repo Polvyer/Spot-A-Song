@@ -1,6 +1,6 @@
 /* eslint-disable import/no-anonymous-default-export */
 import axios from 'axios';
-import { SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI, SPOTIFY_AUTHORIZE_ENDPOINT, SPOTIFY_SEARCH_ENDPOINT, SPOTIFY_GET_ARTIST_ENDPOINT, SPOTIFY_GET_RECOMMENDATIONS_ENDPOINT, SPOTIFY_GET_TRACK_AUDIO_FEATURES, SPOTIFY_GET_USER_PROFILE } from '../constants/constants';
+import { SPOTIFY_CLIENT_ID, SPOTIFY_REDIRECT_URI, SPOTIFY_AUTHORIZE_ENDPOINT, SPOTIFY_SEARCH_ENDPOINT, SPOTIFY_GET_ARTIST_ENDPOINT, SPOTIFY_GET_RECOMMENDATIONS_ENDPOINT, SPOTIFY_GET_TRACK_AUDIO_FEATURES, SPOTIFY_GET_USER_PROFILE, SPOTIFY_SEVERAL_TRACKS_ENDPOINT } from '../constants/constants';
 
 // Have your application request authorization
 const getAuthorizationURL = () => {
@@ -150,6 +150,25 @@ const getArtistsTopTracks = (token, artist_id) => {
   return axios(`https://api.spotify.com/v1/artists/${artist_id}/top-tracks?market=${market}`, config);
 };
 
+// Get Spotify catalog information for multiple tracks based on their Spotify IDs
+const getSeveralTracks = (token, lstOfIds) => {
+
+  const config = {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+    method: 'GET',
+  };
+
+  // Query Parameters
+  const ids = lstOfIds.join(',');
+  const params = `ids=${ids}`;
+
+  const url = `${SPOTIFY_SEVERAL_TRACKS_ENDPOINT}?${params}`;
+
+  return axios(url, config);
+};
+
 const getTrackAudioFeatures = (token) => {
 
   const config = {
@@ -170,6 +189,7 @@ export default {
   searchTrack: searchTrack,
   getRelatedArtists: getRelatedArtists,
   getArtist: getArtist,
+  getSeveralTracks: getSeveralTracks,
   getArtistsTopTracks: getArtistsTopTracks,
   getUserProfile: getUserProfile,
   createPlaylist: createPlaylist,
