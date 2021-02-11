@@ -39,6 +39,7 @@ To open the interactive shell, run
 
 ```bash
 flask shell
+```
 
 By default, you will have access to the flask app and models.
 
