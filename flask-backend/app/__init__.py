@@ -3,10 +3,16 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
+import pickle
 
 db = SQLAlchemy()
 migrate = Migrate()
 cors = CORS()
+
+# Load trained classifier
+clf_path = 'model.sav'
+with open(clf_path, 'rb') as f:
+    model = pickle.load(f)
 
 
 def create_app(config_class=Config):

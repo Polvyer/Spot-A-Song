@@ -198,7 +198,8 @@ const getPlaylist = (token, playlist_id) => {
   return axios(`https://api.spotify.com/v1/playlists/${playlist_id}`, config);
 };
 
-const getTrackAudioFeatures = (token) => {
+// Get audio features for a Track
+const getTrackAudioFeatures = (token, track_id) => {
 
   const config = {
     headers: {
@@ -207,7 +208,7 @@ const getTrackAudioFeatures = (token) => {
     method: 'GET'
   };
 
-  const url = SPOTIFY_GET_TRACK_AUDIO_FEATURES;
+  const url = SPOTIFY_GET_TRACK_AUDIO_FEATURES + `/${track_id}`;
 
   return axios(url, config);
 

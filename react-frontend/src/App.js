@@ -181,7 +181,42 @@ const App = () => {
     let listOfReccs = [];
     const genres = response.data.genres; // Extract genres
     if (genres.length <= 0) { // No genres found
-      // TO-DO
+
+      // Get audio features for prediction
+      try {
+        response = await SpotifyAPI.getTrackAudioFeatures(token, track_id);
+      } catch (err) {
+        regularErrorHandler(err, setTracks, setErrors, errors);
+        setShowLoader(false);
+        return;
+      }
+
+      // Construct prediction object
+      const predObj = {
+        ...response.data,
+        "popularity": track.popularity,
+      };
+
+      // Get predicted genre
+      try {
+        response = await FlaskAPI.getGenre(predObj);
+        genres.push(response.data);
+        console.log('Predicted Genre:', genres);
+      } catch (err) {
+        regularErrorHandler(err, setTracks, setErrors, errors);
+        setShowLoader(false);
+        return;
+      }
+
+      // Get recommendations
+      try {
+        response = await SpotifyAPI.getRecommendations(token, track_id, artist_id, genres);
+        listOfReccs = listOfReccs.concat(response.data.tracks);
+      } catch (err) {
+        regularErrorHandler(err, setTracks, setErrors, errors);
+        setShowLoader(false);
+        return;
+      }
     } else { // Genres found
       if (genres.length <= 3) { // Less than 3 genres found
         // Get recommendations

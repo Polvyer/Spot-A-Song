@@ -1,6 +1,18 @@
 /* eslint-disable import/no-anonymous-default-export */
 import axios from 'axios';
-import { FLASK_TOKEN_ENDPOINT, FLASK_CREATE_PLAYLIST_ENDPOINT, FLASK_BASE_URL } from '../constants/constants';
+import { FLASK_TOKEN_ENDPOINT, FLASK_CREATE_PLAYLIST_ENDPOINT,
+         FLASK_BASE_URL, FLASK_GET_GENRE_ENDPOINT } from '../constants/constants';
+
+// Get a track's predicted genre ('pop', 'rock', 'rap', 'country', 'hip hop', 'latin', 'funk', 'adult standards', 'urban contemporary', 'mellow gold')
+const getGenre = (predObj) => {
+
+  const config = {
+    data: predObj,
+    method: 'POST'
+  };
+
+  return axios(FLASK_GET_GENRE_ENDPOINT, config);
+};
 
 // Create playlist
 const createPlaylist = (playlist_id, status, user_id, track_id, tracks, playlist_name) => {
@@ -66,6 +78,7 @@ const getRefreshedToken = (refresh_token) => {
 };
 
 export default {
+  getGenre: getGenre,
   createPlaylist: createPlaylist,
   getPlaylists: getPlaylists,
   getPlaylist: getPlaylist,

@@ -3,8 +3,29 @@ import requests
 from flask import current_app, jsonify, request, url_for
 from app.api import bp
 from app.api.errors import bad_request
-from app.models import User, Track, Playlist
-from app import db
+from models import User, Track, Playlist
+from app import db, model
+
+
+@bp.route('/genre', methods=['POST'])
+def get_genre():
+    data = request.get_json() or {}
+
+    if 'acousticness' not in data or 'danceability' not in data or 'duration_ms' not in data\
+            or 'energy' not in data or 'instrumentalness' not in data\
+            or 'liveness' not in data or 'loudness' not in data or 'speechiness' not in data\
+            or 'tempo' not in data or 'valence' not in data or 'popularity' not in data\
+            or 'mode' not in data or 'key' not in data:
+        return bad_request('Must include track_id field')
+
+    pred_arr = [[data['acousticness'], data['danceability'], data['duration_ms'],
+                 data['energy'], data['instrumentalness'], data['liveness'], data['loudness'],
+                 data['speechiness'], data['tempo'], data['valence'],
+                 data['popularity'], data['mode'], data['key']]]
+
+    pred = model.predict(pred_arr)
+    genre = pred[0]
+    return jsonify(genre)
 
 
 @bp.route('/tracks/<track_id>', methods=['GET'])
