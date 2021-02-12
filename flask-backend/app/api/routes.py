@@ -3,7 +3,7 @@ import requests
 from flask import current_app, jsonify, request, url_for
 from app.api import bp
 from app.api.errors import bad_request
-from models import User, Track, Playlist
+from app.models import User, Track, Playlist
 from app import db, model
 
 
@@ -148,7 +148,7 @@ def get_token():
     if request.method == 'POST':
         if 'code' in request.form:
             data['code'] = request.form['code']
-            data['redirect_uri'] = 'http://localhost:3000'
+            data['redirect_uri'] = current_app.config["SPOTIFY_REDIRECT_URI"]
             data['grant_type'] = 'authorization_code'
         else:
             data['refresh_token'] = request.form['refresh_token']

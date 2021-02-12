@@ -11,16 +11,16 @@ const POPUP_WIDTH = 400;
 const POPUP_HEIGHT = 426;
 
 /* Flask Miscellaneous */
-const FLASK_BASE_URL = 'http://localhost:5000';
+const FLASK_BASE_URL = process.env.REACT_APP_API_URL;
 
 /* Flask Endpoints */
-const FLASK_GET_GENRE_ENDPOINT = FLASK_BASE_URL + '/api/genre';
-const FLASK_TOKEN_ENDPOINT = FLASK_BASE_URL + '/api/token';
-const FLASK_CREATE_PLAYLIST_ENDPOINT = FLASK_BASE_URL + '/api/playlists';
+const FLASK_GET_GENRE_ENDPOINT = FLASK_BASE_URL + '/genre';
+const FLASK_TOKEN_ENDPOINT = FLASK_BASE_URL + '/token';
+const FLASK_CREATE_PLAYLIST_ENDPOINT = FLASK_BASE_URL + '/playlists';
 
 /* Spotify Miscellaneous */
 const SPOTIFY_CLIENT_ID = '6fac3fef5c2c421cad275fb6fd4e0516';
-const SPOTIFY_REDIRECT_URI = 'http://localhost:3000';
+const SPOTIFY_REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
 const GLOBAL_TOP_50_PLAYLIST_ID = "37i9dQZEVXbMDoHDwVN2tF";
 
 /* Spotify Endpoints */

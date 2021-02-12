@@ -1,5 +1,5 @@
 from app import create_app, db
-from models import User, Track, Playlist
+from app.models import User, Track, Playlist
 
 app = create_app()
 

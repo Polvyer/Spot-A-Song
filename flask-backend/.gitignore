@@ -1,6 +1,10 @@
 .DS_Store
 .env
 .flaskenv
+docker-compose.yml
+Dockerrun.aws.json
+deploy_backend.sh
+aws_deploy
 
 *.py[cod]
 

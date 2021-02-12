@@ -36,12 +36,12 @@ const createPlaylist = (playlist_id, status, user_id, track_id, tracks, playlist
 
 // Get playlists
 const getPlaylists = (user_id) => {
-  return axios.get(FLASK_BASE_URL + `/api/users/${user_id}`);
+  return axios.get(FLASK_BASE_URL + `/users/${user_id}`);
 };
 
 // Get playlist
 const getPlaylist = (playlist_id) => {
-  return axios.get(FLASK_BASE_URL + `/api/playlists/${playlist_id}`);
+  return axios.get(FLASK_BASE_URL + `/playlists/${playlist_id}`);
 };
 
 // Get Spotify access token
