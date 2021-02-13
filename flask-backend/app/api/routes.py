@@ -148,7 +148,7 @@ def get_token():
     if request.method == 'POST':
         if 'code' in request.form:
             data['code'] = request.form['code']
-            data['redirect_uri'] = current_app.config["SPOTIFY_REDIRECT_URI"]
+            data['redirect_uri'] = request.form["SPOTIFY_REDIRECT_URI"]
             data['grant_type'] = 'authorization_code'
         else:
             data['refresh_token'] = request.form['refresh_token']

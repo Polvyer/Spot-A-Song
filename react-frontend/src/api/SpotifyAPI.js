@@ -11,7 +11,8 @@ const getAuthorizationURL = () => {
   // Query Parameters
   const client_id = SPOTIFY_CLIENT_ID;
   const response_type = 'code'; // Authorization Code Flow
-  const redirect_uri = SPOTIFY_REDIRECT_URI; // The URI to redirect to after the user grants or denies permission
+  const redirect_uri = window.location.href; // The URI to redirect to after the user grants or denies permission
+  console.log(redirect_uri);
   const scope = ['playlist-modify-public', 'playlist-modify-private', 'user-read-email']; // Permissions
   const show_dialog = 'true'; // Whether or not to force the user to approve the app again if they’ve already done so
   const params = `client_id=${client_id}&response_type=${response_type}&redirect_uri=${redirect_uri}&scope=${scope.join('%20')}&show_dialog=${show_dialog}`;

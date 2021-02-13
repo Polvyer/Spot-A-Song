@@ -56,7 +56,7 @@ const getUserToken = (code) => {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-    data: `code=${code}`,
+    data: `code=${code}&SPOTIFY_REDIRECT_URI=${window.location.href}`,
     method: 'POST'
   };
 
