@@ -4,7 +4,7 @@
 Website live at: https://spot-a-song.com/
 
 <p align="center">
-  <img src="https://media.giphy.com/media/KnQb2DFQMo0olzsRnQ/giphy.gif" />
+  <img src="https://media.giphy.com/media/6CbDLZsB6n0OoXhsuZ/giphy.gif" />
 </p>
 
 ## App Screenshots
